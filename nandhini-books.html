@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nandhini Books — Comic &amp; Book Shop, Sunguvarchatram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c140d;
+    --paper:#efe3c8;
+    --paper-light:#f8f1de;
+    --crimson:#b8262c;
+    --marigold:#f0a23a;
+    --teal:#1f6f6b;
+    --maroon:#6e1e23;
+    --gutter:5px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Literata', serif;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(28,20,13,0.025) 0px, rgba(28,20,13,0.025) 1px, transparent 1px, transparent 14px);
+  }
+
+  h1,h2{margin:0;}
+
+  .display{font-family:'Bangers', cursive; letter-spacing:0.02em;}
+  .mono{font-family:'Space Mono', monospace;}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    margin:14px;
+    padding:clamp(28px,6vw,64px) clamp(20px,6vw,56px);
+    border:4px solid var(--ink);
+    border-radius:6px;
+    background:var(--ink);
+    background-image:
+      radial-gradient(rgba(239,227,200,0.09) 1.4px, transparent 1.4px);
+    background-size:14px 14px;
+    box-shadow:8px 8px 0 var(--maroon);
+    overflow:hidden;
+    color:var(--paper-light);
+  }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    letter-spacing:0.18em;
+    font-size:0.78rem;
+    color:var(--marigold);
+    margin:0 0 14px;
+    text-transform:uppercase;
+  }
+
+  .shop-name{
+    font-size:clamp(3rem,11vw,6.5rem);
+    line-height:0.95;
+    color:var(--paper-light);
+    text-shadow:4px 4px 0 var(--crimson);
+    max-width:14ch;
+  }
+
+  .tagline{
+    font-size:clamp(1rem,2.2vw,1.25rem);
+    max-width:38ch;
+    margin:18px 0 26px;
+    color:var(--paper-light);
+    opacity:0.92;
+  }
+
+  .status-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    align-items:center;
+  }
+
+  .status-pill, .hours-chip{
+    font-family:'Space Mono', monospace;
+    font-size:0.85rem;
+    padding:9px 16px;
+    border-radius:999px;
+    border:2px solid var(--paper-light);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .status-pill .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:#5fae6c;
+    box-shadow:0 0 0 3px rgba(95,174,108,0.25);
+  }
+  .status-pill.closed .dot{
+    background:var(--crimson);
+    box-shadow:0 0 0 3px rgba(184,38,44,0.25);
+  }
+
+  .hours-chip{background:rgba(248,241,222,0.06);}
+
+  .starburst{
+    position:absolute;
+    top:-18px; right:-18px;
+    width:clamp(120px,18vw,170px);
+    height:clamp(120px,18vw,170px);
+    background:var(--crimson);
+    border:3px solid var(--marigold);
+    clip-path:polygon(50% 0%, 63.39% 17.66%, 85.36% 14.64%, 82.34% 36.61%, 100% 50%, 82.34% 63.39%, 85.36% 85.36%, 63.39% 82.34%, 50% 100%, 36.61% 82.34%, 14.64% 85.36%, 17.66% 63.39%, 0% 50%, 17.66% 36.61%, 14.64% 14.64%, 36.61% 17.66%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    animation:wiggle 6s ease-in-out infinite;
+  }
+  .starburst span{
+    font-family:'Bangers', cursive;
+    color:var(--paper-light);
+    font-size:clamp(0.95rem,1.6vw,1.3rem);
+    line-height:1.05;
+    transform:rotate(-8deg);
+  }
+
+  @keyframes wiggle{
+    0%,100%{transform:rotate(-4deg);}
+    50%{transform:rotate(4deg);}
+  }
+
+  /* ---------- SECTIONS ---------- */
+  main{padding:0 14px 14px;}
+
+  .section-title{
+    font-family:'Bangers', cursive;
+    font-size:clamp(1.6rem,4vw,2.4rem);
+    letter-spacing:0.02em;
+    margin:38px 4px 16px;
+    color:var(--maroon);
+  }
+
+  .panels{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+
+  .panel{
+    background:var(--paper-light);
+    border:3px solid var(--ink);
+    border-radius:6px;
+    padding:24px;
+    box-shadow:6px 6px 0 var(--ink);
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .panel.in-view{opacity:1; transform:translateY(0);}
+
+  .panel h3{
+    font-family:'Space Mono', monospace;
+    font-size:0.95rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--crimson);
+    margin:0 0 10px;
+  }
+  .panel p{margin:0; line-height:1.55;}
+
+  .price-panel{
+    background:var(--marigold);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:14px;
+  }
+  .price-panel h3{color:var(--maroon);}
+  .price-panel .mini-burst{
+    align-self:flex-start;
+    background:var(--ink);
+    color:var(--paper-light);
+    font-family:'Bangers', cursive;
+    font-size:1.1rem;
+    padding:8px 14px;
+    border-radius:4px;
+    transform:rotate(-3deg);
+  }
+
+  /* ---------- VISIT ---------- */
+  .visit-section{margin-top:10px;}
+
+  .speech-bubble{
+    position:relative;
+    background:var(--paper-light);
+    border:3px solid var(--ink);
+    border-radius:18px;
+    padding:clamp(24px,4vw,40px);
+    box-shadow:6px 6px 0 var(--ink);
+    max-width:680px;
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .speech-bubble.in-view{opacity:1; transform:translateY(0);}
+
+  .speech-bubble::after{
+    content:"";
+    position:absolute;
+    left:48px; bottom:-26px;
+    width:0; height:0;
+    border:16px solid transparent;
+    border-top-color:var(--ink);
+    border-bottom:0;
+  }
+  .speech-bubble::before{
+    content:"";
+    position:absolute;
+    left:51px; bottom:-19px;
+    width:0; height:0;
+    border:13px solid transparent;
+    border-top-color:var(--paper-light);
+    border-bottom:0;
+    z-index:1;
+  }
+
+  .speech-bubble h3{
+    font-family:'Space Mono', monospace;
+    font-size:0.9rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin:0 0 14px;
+  }
+
+  .address-line{font-size:1.15rem; margin:0 0 22px; line-height:1.5;}
+
+  .hours-table{
+    display:grid;
+    grid-template-columns:auto auto;
+    gap:6px 22px;
+    font-family:'Space Mono', monospace;
+    font-size:0.95rem;
+    margin:0 0 28px;
+  }
+  .hours-table span:nth-child(odd){color:var(--maroon); font-weight:700;}
+
+  .directions-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--teal);
+    color:var(--paper-light);
+    text-decoration:none;
+    font-family:'Space Mono', monospace;
+    font-size:0.9rem;
+    padding:13px 22px;
+    border-radius:8px;
+    border:2px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .directions-btn:hover{
+    transform:translate(2px,2px);
+    box-shadow:2px 2px 0 var(--ink);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin:32px 14px 14px;
+    padding:22px clamp(20px,5vw,40px);
+    background:var(--ink);
+    border-radius:6px;
+    color:var(--paper-light);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+  footer .word{
+    font-family:'Bangers', cursive;
+    font-size:1.4rem;
+    color:var(--marigold);
+  }
+  footer .line{
+    font-family:'Literata', serif;
+    font-size:0.95rem;
+    opacity:0.85;
+  }
+
+  @media (max-width:760px){
+    .panels{grid-template-columns:1fr;}
+    .starburst{top:auto; right:16px; bottom:-40px; width:110px; height:110px;}
+    .hero{padding-bottom:80px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    .panel, .speech-bubble{opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="eyebrow">Neighbourhood Comic &amp; Book Shop</p>
+  <h1 class="shop-name display">NANDHINI<br>BOOKS</h1>
+  <p class="tagline">Comics, stories and good reads — opposite Molachur Arch, Sunguvarchatram.</p>
+  <div class="status-row">
+    <span class="status-pill mono" id="status-pill"><span class="dot"></span><span id="status-text">Checking hours…</span></span>
+    <span class="hours-chip mono">8:30 AM – 5:00 PM</span>
+  </div>
+  <div class="starburst" aria-hidden="true"><span class="display">FROM<br>₹100</span></div>
+</header>
+
+<main>
+  <section id="shelves">
+    <h2 class="section-title display">On the Shelves</h2>
+    <div class="panels">
+      <article class="panel">
+        <h3 class="mono">Comics</h3>
+        <p>Superhero sagas, adventure series and timeless funnies — fresh stacks coming in often.</p>
+      </article>
+      <article class="panel">
+        <h3 class="mono">Story Books &amp; Novels</h3>
+        <p>Fiction, school reads and bestsellers for every kind of reader, young or old.</p>
+      </article>
+      <article class="panel price-panel">
+        <h3 class="mono">Every Book, Fair Price</h3>
+        <p>Quality reads without the steep price tag.</p>
+        <span class="mini-burst">Paperbacks from ₹100</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="visit-section">
+    <h2 class="section-title display">Visit the Shop</h2>
+    <div class="speech-bubble">
+      <h3>Find Us</h3>
+      <p class="address-line">Opposite Molachur Arch,<br>Sunguvarchatram, Tamil Nadu</p>
+      <div class="hours-table">
+        <span>Opens</span><span>8:30 AM</span>
+        <span>Closes</span><span>5:00 PM</span>
+      </div>
+      <a class="directions-btn" href="https://www.google.com/maps/search/?api=1&query=Molachur+Arch+Sunguvarchatram" target="_blank" rel="noopener">Get directions →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="word">Nandhini Books</span>
+  <span class="line">Opposite Molachur Arch · Sunguvarchatram · 8:30 AM – 5:00 PM</span>
+</footer>
+
+<script>
+  // Live open/closed status based on shop hours (8:30 AM – 5:00 PM, viewer's local time)
+  (function(){
+    var pill = document.getElementById('status-pill');
+    var text = document.getElementById('status-text');
+    var now = new Date();
+    var minutesNow = now.getHours() * 60 + now.getMinutes();
+    var openMin = 8 * 60 + 30;
+    var closeMin = 17 * 60;
+    if (minutesNow >= openMin && minutesNow < closeMin) {
+      text.textContent = 'Open now';
+    } else {
+      pill.classList.add('closed');
+      text.textContent = 'Closed now';
+    }
+  })();
+
+  // Scroll reveal for panels and speech bubble
+  (function(){
+    var items = document.querySelectorAll('.panel, .speech-bubble');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function(el){ el.classList.add('in-view'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function(el){ observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
